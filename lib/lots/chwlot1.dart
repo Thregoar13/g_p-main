@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:g_p/format/LotLayout.dart';
-
+import 'package:flexible/flexible.dart';
 
 class piselot extends StatelessWidget {
    piselot({super.key});
@@ -35,225 +35,119 @@ class piselot extends StatelessWidget {
 
    @override
  Widget build(BuildContext context) {
-    String binaryString = '110010101';
+
+     if (MediaQuery.of(context).orientation == Orientation.portrait ){
+       rotation = 1;
+     }else{
+       rotation = 0;
+     }
+
     return Scaffold(
+        resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.black12,
         title: Text('CHW lot1')
       ),
-      
+       //
        body: SafeArea(
                 child: Column(
-                  mainAxisSize: MainAxisSize.max,
+
                   children: [
 
-                   Stack(
-                    alignment: Alignment.bottomCenter,
-                   children: [
-
-
-                    Container(
-                      child: FutureBuilder<ParkingLot>(
-                        future: futureParkingLot,
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState == ConnectionState.waiting) {
-                            return CircularProgressIndicator();
-                          } else if (snapshot.hasData) {
-                            parkingLot = snapshot.data;
-                            return Column(
-                              children: [
-                                RotatedBox(
-                                  quarterTurns: rotation,
-                                  child: FittedBox(
-                                    child:CustomPaint(size: Size(imageWidth, imageHeight),
-                                      child: Image.network(parkingLot!.lotURL),// Set the size as per your image dimensions
-                                      foregroundPainter: RectanglePainter(
-
-                                        parkingLot!.parkingStalls,
-                                        imageWidth,
-                                        imageHeight,
-                                        avab,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-
-                              ],
-                            );
-                          } else {
-                            return Text('Error: ${snapshot.error}');
-                          }
-                        },
-                      ),
-                    ),
-
-
-
-
-
-
-
-
-
-                   ],
+                   Container(
+                     child: FutureBuilder<ParkingLot>(
+                       future: futureParkingLot,
+                       builder: (context, snapshot) {
+                         if (snapshot.connectionState == ConnectionState.waiting) {
+                           return CircularProgressIndicator();
+                         } else if (snapshot.hasData) {
+                           parkingLot = snapshot.data;
+                           return Container(
+decoration: BoxDecoration(
+  border: Border.all(width: 4,),
+  borderRadius: BorderRadius.circular(12),
+),
+                             child: FittedBox(
+                               fit: BoxFit.fitHeight,
+                               child:RotatedBox(
+                                 quarterTurns: rotation,
+                                 child: CustomPaint(size: Size(imageWidth, imageHeight),
+                                   child: Image.network(parkingLot!.lotURL),// Set the size as per your image dimensions
+                                   foregroundPainter: RectanglePainter(
+                                     parkingLot!.parkingStalls,
+                                     imageWidth,
+                                     imageHeight,
+                                     avab,
+                                   ),
+                                 ),
+                               ),
+                             ),
+                           );
+                         } else {
+                           return Text('Error: ${snapshot.error}');
+                         }
+                       },
+                     ),
                    ),
+Row(
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: [
+    Text(
+      'Parking Availability',
+      style: TextStyle(
+        fontFamily: 'Readex Pro',
+        color: Colors.black,
+        fontWeight: FontWeight.w600,
+      ),
+    ),
 
+  ],
+),
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                      Padding(
-
-                  padding: EdgeInsetsDirectional.fromSTEB(8, 50, 8, 8),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.black26,
-                      borderRadius: BorderRadius.circular(3),
-                      border: Border.all(
-                        color: Colors.black,),),), ),
-
-
-
-                      
-                      const Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
-                      
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Text(
-                            'Parking Lot Availability',
-                            style:TextStyle(
-                                  fontFamily: 'Readex Pro',
-                                  letterSpacing: 1,
-                                 fontSize: 16,
-                                ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Available: ',
+                          style: TextStyle(
+                            fontFamily: 'Readex Pro',
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600,
                           ),
-                          SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 20, 0, 8),
-                                  child: Text(
-                                    'Available: ',
-                                    style: TextStyle(
-                                          fontFamily: 'Readex Pro',
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 8, 0, 8),
-                                  child: Text(
-                                    '354',
-                                    style: TextStyle(
-                                          fontFamily: 'Readex Pro',
-                                          color: Color(0xFF5AEF39),
-                                                                                   fontSize: 16,
-                                        ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                        ),
+                        Text(
+                          '50',
+                          style: TextStyle(
+                            fontFamily: 'Readex Pro',
+                            color: Color(0xFF5AEF39),
                           ),
-                          SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 8, 0, 8),
-                                  child: Text(
-                                    'Occupied: ',
-                                    style: TextStyle(
-                                          fontFamily: 'Readex Pro',
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 8, 0, 8),
-                                  child: Text(
-                                    '6',
-                                    style: TextStyle(
-                                          fontFamily: 'Readex Pro',
-                                          color: Color(0xFFEF393C),
-                                                                                   fontSize: 16,
-                                        ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 8, 0, 8),
-                                  child: Text(
-                                    'Handicapped:',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                          fontFamily: 'Readex Pro',
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 8, 0, 8),
-                                  child: Text(
-                                    ' 0',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                          fontFamily: 'Readex Pro',
-                                          color: Colors.blueGrey,
-                                          fontWeight: FontWeight.normal,
-                                         fontSize: 16,
-                                        ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Occupied: ',
+                          style: TextStyle(
+                            fontFamily: 'Readex Pro',
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        Text(
+                          '50',
+                          style: TextStyle(
+                            fontFamily: 'Readex Pro',
+                            color: Colors.red,
+                          ),
+                        ),
+                      ],
+                    )
+
+
+
                   ],
                   ),
                 )

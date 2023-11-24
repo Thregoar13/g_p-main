@@ -42,6 +42,8 @@ dependencies:
   flutter_typeahead: ^4.8.0
   http: ^1.1.0
   settings_ui: ^2.0.2
+  geolocator: ^10.1.0
+  flexible: ^1.0.0
 
 
   
