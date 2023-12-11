@@ -165,7 +165,9 @@ class RectanglePainter extends CustomPainter {
   RectanglePainter(this.parkingStalls,  this.imageWidth, this.imageHeight, this.avab);
 
   @override
+
   void paint(Canvas canvas, Size size) {
+    print("oopsie");
     for (int i = 0; i < parkingStalls.length; i++) {
       final paint = Paint()
         ..style = PaintingStyle.fill;
@@ -181,8 +183,10 @@ class RectanglePainter extends CustomPainter {
       final x2 = (parkingStalls[i].x / imageWidth) * size.width;
       final y2 = (parkingStalls[i].y / imageHeight) * size.height;
 
-      final rect = Rect.fromPoints(Offset(x, y), Offset(x + 27, y + 76));
-      final rect2 = Rect.fromPoints(Offset(x2, y2), Offset(x2 + 30, y2 + 80));
+      final rect = Rect.fromPoints(Offset(x, y), Offset(x + parkingStalls[i].OffsetX, y + parkingStalls[i].OffsetY));
+
+
+      final rect2 = Rect.fromPoints(Offset(x2, y2), Offset(x2 + parkingStalls[i].OffsetX, y2 + parkingStalls[i].OffsetY));
 
       paint.color = avab[i] ? Colors.green : Colors.red;
       canvas.drawRect(rect, paint);
